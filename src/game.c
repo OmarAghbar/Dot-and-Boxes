@@ -38,7 +38,7 @@ int play_turn(Game *g, Player *p){
     scanf("%d", &dots[3]);
 
     while(can_draw(b, dots[0], dots[1], dots[2], dots[3]) == 0) {
-        printf("Invalid Input. Player %c please renter row and column of the first dot and second dot (e.g. 1 2 0 2): \n", p->initial);
+        printf("Invalid Input. Player %c please re-enter row and column of the first dot and second dot (e.g. 1 2 0 2): \n", p->initial);
         scanf("%d", &dots[0]);
         scanf("%d", &dots[1]);
         scanf("%d", &dots[2]);

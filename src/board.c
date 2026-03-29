@@ -23,15 +23,22 @@ void init_board(Board *b){
 
 
 void display_board(Board *b) {
+    printf("  ");
+    for (int j = 0; j < COLS; j++)
+        printf("%d ", j);
+    printf("\n");
+
     for (int i = 0; i < ROWS; i++) {
+        printf("%d ", i);
         for (int j = 0; j < COLS; j++) {
             printf(".");
             if (j < COLS - 1)
-                printf("%s", b->horizontal[i][j]==1 ? "─" : " ");
+                printf("%s", b->horizontal[i][j]==1 ? "-" : " ");
         }
         printf("\n");
 
         if (i < ROWS - 1) {
+            printf("  ");
             for (int j = 0; j < COLS; j++) {
                 printf("%s", b->vertical[i][j]==1 ? "|" : " ");
                 if (j < COLS - 1)
