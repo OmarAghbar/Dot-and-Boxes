@@ -23,9 +23,12 @@ void init_board(Board *b){
 
 
 void display_board(Board *b) {
+    // Column header
     printf("  ");
-    for (int j = 0; j < COLS; j++)
-        printf("%d ", j);
+    for (int j = 0; j < COLS; j++) {
+        printf("%d", j);
+        if (j < COLS - 1) printf(" ");
+    }
     printf("\n");
 
     for (int i = 0; i < ROWS; i++) {
@@ -38,6 +41,7 @@ void display_board(Board *b) {
         printf("\n");
 
         if (i < ROWS - 1) {
+            printf("  ");
             printf("  ");
             for (int j = 0; j < COLS; j++) {
                 printf("%s", b->vertical[i][j]==1 ? "|" : " ");

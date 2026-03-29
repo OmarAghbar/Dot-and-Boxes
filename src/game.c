@@ -20,10 +20,13 @@ void run_game(Game *g){
     Player *player = &g->players[g->current_turn];
 
     display_board(b);
-    while(game_over(b) != 1 && play_turn(g, player) != 0) {
+    int score;
+    do {
+        score = play_turn(g, player);
         display_board(b);
         print_scores(&g->players[0], &g->players[1]);
-    }
+    } while (game_over(b) != 1 && score != 0);
+
     switch_turn(g, &player);
 }
 
