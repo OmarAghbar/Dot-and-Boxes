@@ -1,5 +1,5 @@
 #ifndef GAME_H_
-#define GAME_H_s
+#define GAME_H_
 
 #include "board.h"
 #include "player.h"
