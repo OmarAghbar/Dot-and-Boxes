@@ -36,11 +36,12 @@ void display_board(Board *b) {
         for (int j = 0; j < COLS; j++) {
             printf(".");
             if (j < COLS - 1)
-                printf("%s", b->horizontal[i][j]==1 ? "─" : " ");
+                printf("%s", b->horizontal[i][j]==1 ? "-" : " ");
         }
         printf("\n");
 
         if (i < ROWS - 1) {
+            printf("  ");
             printf("  ");
             for (int j = 0; j < COLS; j++) {
                 printf("%s", b->vertical[i][j]==1 ? "|" : " ");
