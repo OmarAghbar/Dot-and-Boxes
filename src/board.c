@@ -42,7 +42,6 @@ void display_board(Board *b) {
 
         if (i < ROWS - 1) {
             printf("  ");
-            printf("  ");
             for (int j = 0; j < COLS; j++) {
                 printf("%s", b->vertical[i][j]==1 ? "|" : " ");
                 if (j < COLS - 1)
