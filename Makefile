@@ -22,7 +22,10 @@ $(SRC_DIR)/board.o: $(SRC_DIR)/board.c
 $(SRC_DIR)/player.o: $(SRC_DIR)/player.c
 	$(CC) $(CFLAGS) -I$(INC_DIR) -c $(SRC_DIR)/player.c -o $(SRC_DIR)/player.o
 
+run: $(TARGET)
+	./$(TARGET)
+
 clean:
 	rm -f $(SRC_DIR)/*.o $(TARGET)
 
-.PHONY: clean
+.PHONY: clean run
