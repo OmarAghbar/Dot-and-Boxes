@@ -1,6 +1,9 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include "board.h"
+#include "player.h"
+
 typedef struct {
     Board board;
     Player players[2];
@@ -8,7 +11,8 @@ typedef struct {
 } Game;
 void init_game(Game *g);
 void run_game(Game *g);
-void switch_turn(Game *g);
+int play_turn(Game *g, Player *p);
+void switch_turn(Game *g, Player **p);
 void declare_winner(Game *g);
 
 #endif
