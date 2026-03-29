@@ -1,18 +1,13 @@
 #!/bin/sh
 
-echo "=== Setting up game ==="
+echo "=== Setting up Dots and Boxes ==="
 
 make
 
+sed -i 's|^tty1::.*|tty1::respawn:/sbin/getty --autologin root 38400 tty1|' /etc/inittab
+
 GAME_PATH="$(pwd)/dots_and_boxes"
 
-sudo mkdir -p /etc/systemd/system/getty@tty1.service.d/
-sudo bash -c 'cat > /etc/systemd/system/getty@tty1.service.d/override.conf << EOF
-[Service]
-ExecStart=
-ExecStart=-/sbin/agetty --autologin root --noclear %I \$TERM
-EOF'gi
+grep -qxF "$GAME_PATH" /root/.profile || echo "$GAME_PATH" >> /root/.profile
 
-grep -qxF "$GAME_PATH" /root/.profile || echo "$GAME_PATH" | sudo tee -a /root/.profile
-
-echo "=== Done! Run: sudo reboot ==="
+echo "=== Done! Run: reboot ==="
