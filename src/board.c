@@ -22,20 +22,20 @@ void init_board(Board *b){
 }   
 
 
-void print_board(Board *b) {
+void display_board(Board *b) {
     for (int i = 0; i < ROWS; i++) {
         for (int j = 0; j < COLS; j++) {
             printf(".");
             if (j < COLS - 1)
-                printf("%s", b->horizontal[i][j]==1 ? "──" : "  ");
+                printf("%s", b->horizontal[i][j]==1 ? "─" : " ");
         }
         printf("\n");
 
         if (i < ROWS - 1) {
             for (int j = 0; j < COLS; j++) {
-                printf("%s", b->vertical[i][j]==1 ? "|" : "  ");
+                printf("%s", b->vertical[i][j]==1 ? "|" : " ");
                 if (j < COLS - 1)
-                    printf(" %c ", b->boxes[i][j]);
+                    printf("%c", b->boxes[i][j]);
             }
             printf("\n");
         }

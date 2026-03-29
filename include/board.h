@@ -13,7 +13,7 @@ typedef struct {
 
 // Methods
 void init_board(Board *b);
-void print_board(Board *b); //will be called every time a player does a move
+void display_board(Board *b); //will be called every time a player does a move
 int can_draw(Board *b, int first_point, int second_point, int third_point, int fourth_point); //this is a helper method used only in board.c
 int draw_line(Board *b, int first_point, int second_point, int third_point, int fourth_point);   // should return 1 if a line is drawn successfully, or 0 if you not
 int check_boxes(Board *b, int first_point, int second_point, int third_point, int fourth_point, char player); // sign the player's symbol to mark the box if the player completes a box, and return the number of boxes completed by this move. It will return at most 2 boxes
