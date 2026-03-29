@@ -23,7 +23,6 @@ void init_board(Board *b){
 
 
 void display_board(Board *b) {
-    // Column header
     printf("  ");
     for (int j = 0; j < COLS; j++) {
         printf("%d", j);
@@ -36,14 +35,14 @@ void display_board(Board *b) {
         for (int j = 0; j < COLS; j++) {
             printf(".");
             if (j < COLS - 1)
-                printf("%s", b->horizontal[i][j]==1 ? "-" : " ");
+                printf("%s", b->horizontal[i][j] ==1 ? "-" : " ");
         }
         printf("\n");
 
         if (i < ROWS - 1) {
             printf("  ");
             for (int j = 0; j < COLS; j++) {
-                printf("%s", b->vertical[i][j]==1 ? "|" : " ");
+                printf("%s", b->vertical[i][j] == 1 ? "|" : " ");
                 if (j < COLS - 1)
                     printf("%c", b->boxes[i][j]);
             }
@@ -82,7 +81,7 @@ int can_draw(Board *b, int first_point, int second_point, int third_point, int f
 }
 
 int draw_line(Board *b, int first_point, int second_point, int third_point, int fourth_point){
-    int check = can_draw(b, first_point,  second_point, third_point, fourth_point);
+    int check = check_if_horizontal_or_vertical(first_point,  second_point, third_point, fourth_point);
     if(check == 1){
         int first_col = (second_point < fourth_point) ? second_point : fourth_point;
         b->horizontal[first_point][first_col] = 1;
