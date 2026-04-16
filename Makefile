@@ -5,7 +5,7 @@ TARGET = dots_and_boxes
 SRC_DIR = src
 INC_DIR = include
 
-OBJS = $(SRC_DIR)/main.o $(SRC_DIR)/game.o $(SRC_DIR)/board.o $(SRC_DIR)/player.o
+OBJS = $(SRC_DIR)/main.o $(SRC_DIR)/game.o $(SRC_DIR)/board.o $(SRC_DIR)/player.o $(SRC_DIR)/bot.o
 
 $(TARGET): $(OBJS)
 	$(CC) $(CFLAGS) -o $(TARGET) $(OBJS)
@@ -22,10 +22,13 @@ $(SRC_DIR)/board.o: $(SRC_DIR)/board.c
 $(SRC_DIR)/player.o: $(SRC_DIR)/player.c
 	$(CC) $(CFLAGS) -I$(INC_DIR) -c $(SRC_DIR)/player.c -o $(SRC_DIR)/player.o
 
+$(SRC_DIR)/bot.o: $(SRC_DIR)/bot.c
+	$(CC) $(CFLAGS) -I$(INC_DIR) -c $(SRC_DIR)/bot.c -o $(SRC_DIR)/bot.o
+
 run: $(TARGET)
 	./$(TARGET)
-
+	
 clean:
 	rm -f $(SRC_DIR)/*.o $(TARGET)
 
-.PHONY: clean run
+.PHONY: clean
