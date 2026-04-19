@@ -122,30 +122,41 @@ static int minimax(Board b, int depth, int alpha, int beta, int maximizing,
 Move bot_get_best_move(Board *b, char bot_initial, char opp_initial) {
     Move moves[MAX_EDGES];
     int total = get_all_moves(b, moves);
-
-    int depth;
-    if      (total >= 35) depth = 5;
-    else if (total >= 25) depth = 6;
-    else                  depth = BOT_DEPTH;
+    int max_depth;
+    if      (total >= 35) max_depth = 5;
+    else if (total >= 25) max_depth = 6;
+    else                  max_depth = BOT_DEPTH;
 
     Move best_move = moves[0];
-    int best_val = INT_MIN;
-    int alpha = INT_MIN;
-    int beta = INT_MAX;
-
-    for (int i = 0; i < total; i++) {
-        Board nb = *b;
-        draw_line(&nb, moves[i].r1, moves[i].c1, moves[i].r2, moves[i].c2);
-        int scored = check_boxes(&nb, moves[i].r1, moves[i].c1,
-                                  moves[i].r2, moves[i].c2, bot_initial);
-        int next_max = (scored > 0 && !game_over(&nb)) ? 1 : 0;
-        int val = minimax(nb, depth - 1, alpha, beta, next_max,
-                          bot_initial, opp_initial);
-        if (val > best_val) {
-            best_val = val;
-            best_move = moves[i];
+    for (int current_depth = 1; current_depth <= max_depth; current_depth++) {
+        int alpha = INT_MIN;
+        int beta = INT_MAX;
+        int new_best_val = INT_MIN;
+        Move new_best_move = moves[0];
+        for (int i = 0; i < total; i++) {
+            Board nb = *b;
+            draw_line(&nb, moves[i].r1, moves[i].c1, moves[i].r2, moves[i].c2);
+            int scored = check_boxes(&nb, moves[i].r1, moves[i].c1,
+                                      moves[i].r2, moves[i].c2, bot_initial);
+            int next_max = (scored > 0 && !game_over(&nb)) ? 1 : 0;
+            int val = minimax(nb, current_depth - 1, alpha, beta, next_max,
+                              bot_initial, opp_initial);
+            if (val > new_best_val) {
+                new_best_val = val;
+                new_best_move = moves[i];
+            }
+            if (val > alpha) alpha = val;
         }
-        if (val > alpha) alpha = val;
+        best_move = new_best_move;
+        for (int i = 1; i < total; i++) {
+            if (moves[i].r1 == new_best_move.r1 && moves[i].c1 == new_best_move.c1 &&
+            moves[i].r2 == new_best_move.r2 && moves[i].c2 == new_best_move.c2) {
+            Move tmp = moves[0];
+            moves[0] = moves[i];
+            moves[i] = tmp;
+            break;
+            }   
+        }
     }
 
     return best_move;
