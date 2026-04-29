@@ -25,10 +25,13 @@ $(SRC_DIR)/player.o: $(SRC_DIR)/player.c
 $(SRC_DIR)/bot.o: $(SRC_DIR)/bot.c
 	$(CC) $(CFLAGS) -I$(INC_DIR) -c $(SRC_DIR)/bot.c -o $(SRC_DIR)/bot.o
 
+server: $(SRC_DIR)/server.c $(SRC_DIR)/board.c $(SRC_DIR)/player.c
+	$(CC) $(CFLAGS) -I$(INC_DIR) -o server $(SRC_DIR)/server.c $(SRC_DIR)/board.c $(SRC_DIR)/player.c -lpthread
+
 run: $(TARGET)
 	./$(TARGET)
-	
-clean:
-	rm -f $(SRC_DIR)/*.o $(TARGET)
 
-.PHONY: clean
+clean:
+	rm -f $(SRC_DIR)/*.o $(TARGET) server
+
+.PHONY: clean run
