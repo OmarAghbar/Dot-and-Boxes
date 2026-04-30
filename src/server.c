@@ -85,7 +85,7 @@ static void *client_handler(void *arg)
             break;
         }
 
-        send_str(fd, "Your Turn\n");
+        send_str(fd, "YOUR_TURN\n");
         pthread_mutex_unlock(&s->lock);
 
         /* PHASE 2: inner loop, keep turn while scoring */
@@ -111,7 +111,8 @@ static void *client_handler(void *arg)
             /* parse "MOVE r1 c1 r2 c2" */
             int r1, c1, r2, c2;
             if (sscanf(buf, "MOVE %d %d %d %d", &r1, &c1, &r2, &c2) != 4) {
-                send_str(fd, "Invalid move format. Try again.\n");
+                send_str(fd, "INVALID\n");
+                send_str(fd, "YOUR_TURN\n");
                 continue;
             }
 
@@ -119,7 +120,8 @@ static void *client_handler(void *arg)
             pthread_mutex_lock(&s->lock);
 
             if (!can_draw(&s->board, r1, c1, r2, c2)) {
-                send_str(fd, "Invalid move. Try again.\n");
+                send_str(fd, "INVALID\n");
+                send_str(fd, "YOUR_TURN\n");
                 pthread_mutex_unlock(&s->lock);
                 continue;
             }
@@ -150,7 +152,7 @@ static void *client_handler(void *arg)
 
             if (scored > 0) {
                 /* player scored, they keep their turn */
-                send_str(fd, "Your turn again\n");
+                send_str(fd, "YOUR_TURN\n");
             } else {
                 /* no score, switch turn and wake the other thread */
                 s->current_turn = other;
@@ -170,18 +172,22 @@ thread_exit:
     return NULL;
 }
 
-int main(int argc, char *argv[])
+int run_server(int argc)
 {
-    int port = DEFAULT_PORT;
-    if (argc >= 2)
-        port = atoi(argv[1]);
+    int port;
+    if(argc == 0){
+        port = DEFAULT_PORT;
+    }
+    else{
+        port = argc;
+    }
 
     int server_fd = socket(AF_INET, SOCK_STREAM, 0);
     if (server_fd < 0) { perror("socket"); exit(1); }
 
     int opt = 1;
     setsockopt(server_fd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt));
-
+    
     struct sockaddr_in addr = {
         .sin_family      = AF_INET,
         .sin_addr.s_addr = INADDR_ANY,
@@ -216,7 +222,7 @@ int main(int argc, char *argv[])
         state.client_fds[i] = fd;
 
         char msg[32];
-        snprintf(msg, sizeof(msg), "You are %c\n", i == 0 ? 'A' : 'B');
+        snprintf(msg, sizeof(msg), "YOU_ARE %c\n", i == 0 ? 'A' : 'B');
         send_str(fd, msg);
 
         printf("[server] Player %c connected from %s\n",
