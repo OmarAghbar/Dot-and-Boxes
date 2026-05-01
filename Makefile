@@ -10,7 +10,8 @@ OBJS = $(SRC_DIR)/main.o   \
        $(SRC_DIR)/board.o  \
        $(SRC_DIR)/player.o \
        $(SRC_DIR)/bot.o    \
-       $(SRC_DIR)/server.o
+       $(SRC_DIR)/server.o \
+       $(SRC_DIR)/client.o
 
 $(TARGET): $(OBJS)
 	$(CC) $(CFLAGS) -o $(TARGET) $(OBJS) -lpthread
@@ -32,6 +33,9 @@ $(SRC_DIR)/bot.o: $(SRC_DIR)/bot.c
 
 $(SRC_DIR)/server.o: $(SRC_DIR)/server.c
 	$(CC) $(CFLAGS) -I$(INC_DIR) -c $(SRC_DIR)/server.c -o $(SRC_DIR)/server.o
+
+$(SRC_DIR)/client.o: $(SRC_DIR)/client.c
+	$(CC) $(CFLAGS) -I$(INC_DIR) -c $(SRC_DIR)/client.c -o $(SRC_DIR)/client.o
 
 
 run: $(TARGET)
