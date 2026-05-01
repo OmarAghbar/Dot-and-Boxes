@@ -38,7 +38,7 @@ int main() {
         } else if(answer2 == 2){
             char ip[64];
             int port;
-            printf("Enter server IP address: ");
+            printf("Enter server IP address (127.0.0.1 to play on the same machine): ");
             scanf("%63s", ip);
             printf("Enter server port: ");
             scanf("%d", &port);
