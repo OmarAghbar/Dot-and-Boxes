@@ -4,6 +4,7 @@
 #include "../include/game.h"
 #include "../include/board.h"
 #include "../include/player.h"
+#include "../include/client.h"
 
 int main() {
     printf("Dots and Boxes Game\n");
@@ -35,8 +36,13 @@ int main() {
                 run_server(0);
             }
         } else if(answer2 == 2){
-            printf("Joining a game.\n");
-            return 0;
+            char ip[64];
+            int port;
+            printf("Enter server IP address: ");
+            scanf("%63s", ip);
+            printf("Enter server port: ");
+            scanf("%d", &port);
+            return run_client(ip, port);
         } else {
             printf("Invalid input. Exiting.\n");
             return 1;
