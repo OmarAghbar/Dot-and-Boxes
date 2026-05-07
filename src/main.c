@@ -5,6 +5,7 @@
 #include "../include/player.h"
 
 int main() {
+    setvbuf(stdout, NULL, _IONBF, 0);
     Game g;
     init_game(&g);
     while(!game_over(&g.board)){
