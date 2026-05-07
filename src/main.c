@@ -7,6 +7,7 @@
 #include "../include/client.h"
 
 int main() {
+    setvbuf(stdout, NULL, _IONBF, 0);
     printf("Dots and Boxes Game\n");
     printf("Do you want to play locally or online? (1 for local, 2 for online): ");
     int answer;
